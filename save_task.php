@@ -10,6 +10,8 @@ if (isset($_POST['save_task'])) {
     if (!$result) {
         die("Query failed");
     } else {
-        echo "Tarea guardada";
+        $_SESSION['message'] = "Tarea guardada satisfactoriamente";
+        $_SESSION['message_type'] = "success";
+        header("Location: index.php");
     }
 }
