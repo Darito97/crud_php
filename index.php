@@ -4,7 +4,7 @@
 
 <div class="container p-4">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 py-2">
             <?php if (isset($_SESSION['message'])) { ?>
                 <div class="alert alert-<?= $_SESSION['message_type']; ?>" role="alert">
                     <?= $_SESSION['message'] ?>
@@ -27,8 +27,42 @@
                 </form>
             </div>
         </div>
-        <div class="col-md-8">
-
+        <div class="col-md-8 py-2">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Descripción</th>
+                        <th>Fecha de creación</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $query = "SELECT * FROM Tasks;";
+                    $result = mysqli_query($conn, $query);
+                    if (isset($result)) {
+                        while ($row = mysqli_fetch_array($result)) {
+                    ?>
+                            <tr>
+                                <td><?php echo $row['title']; ?></td>
+                                <td><?php echo $row['description']; ?></td>
+                                <td><?php echo $row['created_at']; ?></td>
+                                <td>
+                                    <a href="edit.php?id=<?php echo $row['id']; ?>" class="btn btn-secondary">
+                                        <i class="fas fa-marker"></i>
+                                    </a>
+                                    <a href="delete_task.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                    <?php
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
